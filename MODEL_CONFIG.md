@@ -17,21 +17,24 @@
 
 ## Alternative Models
 
-If you want to use a different model, edit `backend/main.py`:
+If you want to use a different model, simply update your `.env` file or `backend/app/config.py`:
 
 ### Option 1: Groq's Llama 3.1 70B
-```python
-model="llama-3.1-70b-versatile"
+```ini
+# In .env
+GROQ_MODEL=llama-3.1-70b-versatile
 ```
 
 ### Option 2: Groq's Mixtral
-```python
-model="mixtral-8x7b-32768"
+```ini
+# In .env
+GROQ_MODEL=mixtral-8x7b-32768
 ```
 
 ### Option 3: Groq's Gemma 2
-```python
-model="gemma2-9b-it"
+```ini
+# In .env
+GROQ_MODEL=gemma2-9b-it
 ```
 
 ## Model Deprecation Notice
@@ -47,32 +50,20 @@ Make sure you're using `llama-3.3-70b-versatile` instead.
 
 ## Configuration Locations
 
-The model is referenced in two places in `backend/main.py`:
+The model is dynamically loaded in `backend/app/config.py`:
 
-1. **SQL Generation (Line ~283):**
 ```python
-resp = client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
-    messages=messages,
-    temperature=0,
-    max_tokens=1000,
-)
+GROQ_MODEL: str = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 ```
 
-2. **Answer Formatting (Line ~334):**
-```python
-resp2 = client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
-    messages=follow_up,
-    temperature=0.2,
-    max_tokens=800,
-)
-```
+It is passed to the Groq API client inside `backend/app/llm.py`.
 
 ## Temperature Settings
 
+Inside `backend/app/llm.py`:
 - **SQL Generation:** `temperature=0` - Deterministic, consistent SQL queries
 - **Answer Formatting:** `temperature=0.2` - Slightly more natural language variation
+
 
 ## Getting Your API Key
 
