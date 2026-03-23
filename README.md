@@ -2,7 +2,8 @@
 
 A graph-based data modeling and query system that visualizes SAP Order-to-Cash business processes and enables natural language querying using an LLM.
 
-![O2C Graph UI](frontend/public/screenshot.png)
+<img width="1920" height="922" alt="{5F13A4A0-FF6F-4CAF-ADF6-B98D72FBD8C9}" src="https://github.com/user-attachments/assets/3753f2ed-7722-4d53-bfd8-e1bef4aefb46" />
+
 
 ## Architecture
 
